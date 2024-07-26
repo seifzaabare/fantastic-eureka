@@ -14,6 +14,14 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://gofile.io/d/Jym2yJ" -OutFile "xmrig-6.21.3-msvc-win64.rar"
 
+      - name: Verify Download
+        run: |
+          $fileSize = (Get-Item "xmrig-6.21.3-msvc-win64.rar").length
+          if ($fileSize -lt 10000) { # File size is less than 10 KB, which is suspiciously small
+            Write-Host "Downloaded file size is unexpectedly small. The file may not be a valid RAR archive."
+            exit 1
+          }
+
       - name: Install 7-Zip
         run: choco install -y 7zip
 
